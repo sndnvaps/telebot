@@ -16,6 +16,9 @@ type Message struct {
 	// For forwarded messages, sender of the original message.
 	OriginalSender User `json:"forward_from"`
 
+	// For forwarded messages, chat of the original message when forwarded from a channel.
+	OriginalChat Chat `json:"forward_from_chat"`
+
 	// For forwarded messages, unixtime of the original message.
 	OriginalUnixtime int `json:"forward_date"`
 
@@ -58,7 +61,7 @@ type Message struct {
 	// Sender leads to User, capable of invite.
 	//
 	// UserJoined might be the Bot itself.
-	UserJoined User `json:"new_chat_participant"`
+	UserJoined User `json:"new_chat_member"`
 
 	// For a service message, represents a user,
 	// that just left chat, this message came from.
@@ -67,7 +70,7 @@ type Message struct {
 	// capable of this kick.
 	//
 	// UserLeft might be the Bot itself.
-	UserLeft User `json:"left_chat_participant"`
+	UserLeft User `json:"left_chat_member"`
 
 	// For a service message, represents a new title
 	// for chat this message came from.
@@ -128,6 +131,10 @@ type Message struct {
 	//
 	// Sender would lead to creator of the migration.
 	MigrateFrom int64 `json:"migrate_from_chat_id"`
+
+	Entities []MessageEntity `json:"entities,omitempty"`
+
+	Caption string `json:"caption,omitempty"`
 }
 
 // Origin returns an origin of message: group chat / personal.
@@ -147,7 +154,7 @@ func (m *Message) Time() time.Time {
 // IsForwarded says whether message is forwarded copy of another
 // message or not.
 func (m *Message) IsForwarded() bool {
-	return m.OriginalSender != User{}
+	return m.OriginalSender != User{} || m.OriginalChat != Chat{}
 }
 
 // IsReply says whether message is reply to another message or not.

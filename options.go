@@ -1,15 +1,5 @@
 package telebot
 
-// ParseMode determines the way client applications treat the text of the message
-type ParseMode string
-
-// Supported ParseMode
-const (
-	ModeDefault  ParseMode = ""
-	ModeMarkdown ParseMode = "Markdown"
-	ModeHTML     ParseMode = "HTML"
-)
-
 // SendOptions represents a set of custom options that could
 // be appled to messages sent.
 type SendOptions struct {
@@ -40,6 +30,9 @@ type ReplyMarkup struct {
 	//
 	// Note: you don't need to set HideCustomKeyboard field to show custom keyboard.
 	CustomKeyboard [][]string `json:"keyboard,omitempty"`
+
+	InlineKeyboard [][]KeyboardButton `json:"inline_keyboard,omitempty"`
+
 	// Requests clients to resize the keyboard vertically for optimal fit
 	// (e.g., make the keyboard smaller if there are just two rows of buttons).
 	// Defaults to false, in which case the custom keyboard is always of the

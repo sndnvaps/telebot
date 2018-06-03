@@ -22,17 +22,11 @@ func TestBot(t *testing.T) {
 
 	_, err := NewBot(token)
 	if err != nil {
-		t.Fatal("Couldn't create bot:", err)
+		t.Fatal("couldn't create bot:", err)
 	}
 }
 
-// Just some compile-time checks to make sure it's stable.
 func TestRecipient(_ *testing.T) {
-	// Tricking linters...
-	if true {
-		return
-	}
-
 	bot := Bot{}
 	bot.SendMessage(User{}, "", nil)
 	bot.SendMessage(Chat{}, "", nil)
